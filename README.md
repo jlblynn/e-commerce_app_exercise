@@ -42,3 +42,21 @@ Bind the classes of few and none depending on the quantity of stock left:
 Disable the 'add to cart' button if the product is out of stock.
 Find the button and use the v-bind directive to bind to the disabled property if there is no stock:
 <button class="btn btn-success" :disabled="product.inStock == 0">Add to cart</button>
+
+ADDING PRODUCTS TO THE CART
+
+Create a cart object under the data property.
+Then an empty items array inside of that.
+
+Create a method that is responsible for adding contents to the cart:
+addProductToCart: function(product) {
+    this.cart.items.push({
+        product: product,
+        quantity: 1
+    });
+
+    product.inStock--;
+}
+
+Now attatch this method to a click event button:
+<button class="btn btn-success" @click="addProductToCart(product)" :disabled="product.inStock == 0">Add to cart</button>
