@@ -147,3 +147,64 @@ Then use the prevent modifier to prevent the browser from navigating up to the '
         <button class="btn btn-primary" @click="isShowingCart = true">View Cart</button>
     </div>
 </nav>
+
+DISPLAYING THE CART
+
+The cart items are displayed in a table.
+Use an if statement to display the table if there are any items in the cart:
+
+<table v-if="cart.items.length > 0" class="table table-striped">
+
+Or a note if there is nothing in it:
+
+<p v-else>Your cart is currently empty.</p>
+
+Then in the table loop through the product name, quantity and price:
+
+<tr v-for="item in cart.items">
+    <td>{{ item.product.name }}</td>
+
+    <td>
+        {{ item.quantity }}
+    </td>
+
+    <td>{{ item.quantity * item.product.price | currency }}</td>
+</tr>
+
+Then show the subtotal:
+
+<tr>
+    <td class="text-right" colspan="2">
+        <strong>Subtotal</strong>
+    </td>
+
+    <td>{{ cartTotal | currency }}</td>
+</tr>
+
+For the taxes use a computed property because the tax amount depends on the product amount.
+Create a 'taxAmount' computed property:
+
+taxAmount: function() {
+    return ((this.cartTotal * 10) / 100);
+}
+
+Then apply this to the template:
+
+<tr>
+    <td class="text-right" colspan="2">
+        <strong>Taxes</strong>
+    </td>
+
+    <td>{{ taxAmount | currency }}</td>
+</tr>
+
+Then add the grand total:
+
+<tr>
+    <td class="text-right" colspan="2">
+        <strong>Grand total</strong>
+    </td>
+
+    <td>{{ cartTotal + taxAmount | currency }}</td>
+</tr>
+
