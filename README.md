@@ -107,3 +107,43 @@ Let's make it so so it either displays 'items' or 'item' depending on how many i
     </span>
     <button class="btn btn-primary" @click="isShowingCart = true">View Cart</button>
 </div>
+
+SWITCHING BETWEEN VIEWS
+
+This is a simple app that only has a product page and the cart.
+
+**The following is not best practice**
+
+Add a data property that contains a boolean to decide which page we are on.
+Set it to false as we don't want the cart displayed on startup:
+
+data: {
+    isShowingCart: false,
+
+Use this data property to decide which elements to display.
+
+Show the products if data property is not true then add this to the DOM:
+
+<div v-if="!isShowingCart" id="products" class="row list-group">
+
+Otherwise display the shopping cart:
+
+<div v-else>
+    <h1>Cart</h1>
+    <p>The cart will be displayed here</p>
+</div>
+
+Now we need to be able to change the data property.
+Use the button at the top of the page for 'view cart'.
+Create a @click event that sets the isShowingCart to true when clicked.
+For going back to the products page, do the same thing with the 'E-commerce' button.
+Then use the prevent modifier to prevent the browser from navigating up to the '#':
+
+<nav id="top-navigation" class="well well-sm flex flex-row align-center">
+    <a href="#" @click.prevent="isShowingCart = false"><strong>E-commerce Inc.</strong></a>
+
+    <div class="text-right pull-right cart-info">
+        <span class="stats">{{ cart.items.length }} <template v-if="cart.items.length == 1">item</template><template v-else>items</template> in cart, totalling {{ cartTotal | currency }}</span>
+        <button class="btn btn-primary" @click="isShowingCart = true">View Cart</button>
+    </div>
+</nav>
