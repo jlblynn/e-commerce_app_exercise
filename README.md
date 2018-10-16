@@ -93,6 +93,17 @@ computed: {
 Display this information:
 
 <div class="text-right pull-right cart-info">
-    <span class="stats">{{ cart.items.length }} <template v-if="cart.items.length == 1">item</template><template v-else>items</template> in cart, totalling {{ cartTotal | currency }}</span>
+    <span class="stats">{{ cart.items.length }} items in cart, totalling {{ cartTotal | currency }}</span>
+    <button class="btn btn-primary" @click="isShowingCart = true">View Cart</button>
+</div>
+
+Let's make it so so it either displays 'items' or 'item' depending on how many items are in the cart:
+
+<div class="text-right pull-right cart-info">
+    <span class="stats">{{ cart.items.length }} 
+        <template v-if="cart.items.length == 1">item</template>
+        <template v-else>items</template>
+        in cart, totalling {{ cartTotal | currency }}
+    </span>
     <button class="btn btn-primary" @click="isShowingCart = true">View Cart</button>
 </div>
