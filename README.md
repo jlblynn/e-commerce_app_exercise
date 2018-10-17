@@ -306,3 +306,32 @@ Add the button for this:
     <button class="btn btn-success" @click="increaseQuantity(item)" :disabled="item.product.inStock == 0">+</button>
     <button class="btn btn-danger" @click="decreaseQuantity(item)">-</button>
 </td>
+
+CHECKING OUT
+
+When checkout is confirmed, the cart will be cleared and the products put back into stock.
+
+Create a checkout method.
+Confirm that the user wants to checkout.
+Put the products back in stock.
+Loop through the cart items.
+Add a function that takes the item.
+Add the quantity back to the inStock quantity.
+Clear the cart by setting an empty array:
+
+checkout: function() {
+    if (confirm('Are you sure that you want to purchase these products?')) {
+        this.cart.items.forEach(function(item) {
+            item.product.inStock += item.quantity;
+        });
+    
+        this.cart.items = [];
+    }
+}
+
+Add the click event method to the checkout button:
+
+<tr>
+    <td colspan="2"></td>
+    <td><button class="btn btn-success" @click="checkout">Checkout</button></td>
+</tr>
