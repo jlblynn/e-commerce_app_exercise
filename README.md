@@ -252,3 +252,57 @@ addProductToCart: function(product) {
 }
 
 Now if the same product is added to the cart more than once, it will display that amount as it's quantity instead of listing every instance.
+
+INCREASING AND DECREASING PRODUCT QUANTITIES
+
+Add an increase and decrease quantity button to cart items.
+
+Create a method to increase the quantity of a cart item.
+Decrease the in stock quantity by 1:
+
+increaseQuantity: function(cartItem) {
+    cartItem.product.inStock--;
+    cartItem.quantity++;
+}
+
+Create a button with the click handler for this method.
+Disable this button if there is no more stock:
+
+<td>
+    {{ item.quantity }} &nbsp;
+    <button class="btn btn-success" @click="increaseQuantity(item)" :disabled="item.product.inStock == 0">+</button>
+</td>
+
+Remove an item from the cart.
+Find the index of the item in the cart.
+Verify that the item was found.
+Remove it from the array with splice by passing it the idex and the amount to remove:
+
+removeItemFromCart: function(cartItem) {
+    var index = this.cart.items.indexOf(cartItem);
+
+    if (index !== -1) {
+        this.cart.items.splice(index, 1);
+    }
+}
+
+Decrease the quantity of an item in the cart.
+Increase the stock amount.
+If the quantity is 0 then remove it from the cart:
+
+decreaseQuantity: function(cartItem) {
+    cartItem.quantity--;
+    cartItem.product.inStock++;
+
+    if (cartItem.quantity == 0) {
+        this.removeItemFromCart(cartItem);
+    }
+}
+
+Add the button for this:
+
+<td>
+    {{ item.quantity }} &nbsp;
+    <button class="btn btn-success" @click="increaseQuantity(item)" :disabled="item.product.inStock == 0">+</button>
+    <button class="btn btn-danger" @click="decreaseQuantity(item)">-</button>
+</td>
