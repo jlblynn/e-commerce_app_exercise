@@ -208,3 +208,47 @@ Then add the grand total:
     <td>{{ cartTotal + taxAmount | currency }}</td>
 </tr>
 
+HANDLING ADDING PRODUCTS ALREADY IN CART
+
+At the moment we can't change what is already added into the cart.
+
+First check to see if that product is already in the cart when it is added.
+Create a getCartItem method.
+Pass it product.
+Loop through the items in the cart.
+Check if the product.id in the loop matched the current product.id.
+Return this cart item.
+Otherwise return null:
+
+getCartItem: function(product) {
+    for (var i = 0; i < this.cart.items.length; i++) {
+        if (this.cart.items[i].product.id === product.id) {
+            return this.cart.items[i];
+        }
+    }
+
+    return null;
+}
+
+Then we can make use of this in the addProductToCart method.
+Create a variable for it called cartItem.
+Check if it does not equal null.
+If it does add quantity.
+If it doesn't then add the product as before:
+
+addProductToCart: function(product) {
+    var cartItem = this.getCartItem(product);
+
+    if (cartItem != null) {
+        cartItem.quantity++;
+    } else {
+        this.cart.items.push({
+            product: product,
+            quantity: 1
+        });
+    }
+
+    product.inStock--;
+}
+
+Now if the same product is added to the cart more than once, it will display that amount as it's quantity instead of listing every instance.
